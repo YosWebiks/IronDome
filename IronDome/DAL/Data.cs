@@ -2,7 +2,7 @@
 {
 	public class Data
 	{
-		string Cs = "";
+		string Cs = "server = YOSIWEBIKS\\SQLEXPRESS; initial catalog = iron_dome_db; user id = sa; password = 1234; TrustServerCertificate=Yes";
 
 		private Data()
 		{
@@ -12,7 +12,7 @@
 		static Data _Data;
 
 
-		public static DataLayer GetData
+		public static DataLayer Get
 		{
 			get
 			{
