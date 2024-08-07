@@ -1,0 +1,57 @@
+﻿@model IronDome.ViewModel.ThreatView
+
+@{
+    ViewData["Title"] = "AttackArea";
+}
+
+<h1>Attack Area</h1>
+
+<p>
+    <a asp-action="createThreat">Create New Threat</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @* @Html.DisplayNameFor(model => model.threats.id) *@
+                ID
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.responseTime) *@
+                Response Time
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.status) *@
+                Status
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.fired_at) *@
+                Fierd At
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.threats) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.responseTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fired_at)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
