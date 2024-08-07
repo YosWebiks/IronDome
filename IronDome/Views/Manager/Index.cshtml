@@ -4,11 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>DEfence Ammiunition</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -34,10 +31,12 @@
                 @Html.DisplayFor(modelItem => item.name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.amount)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.id }) 
+               @*  @Html.DisplayFor(modelItem => item.amount) *@
+                    <form asp-action="updateDefenceAmmiunition" method="get">
+                    <input name="amount" value="@item.amount" />
+                    <input name="dfid" hidden="hidden" value="@item.id" />
+                    <input type="submit" value="Update" />
+                </form>
             </td>
         </tr>
 }
