@@ -50,6 +50,10 @@
 					{	
 						@Html.ActionLink("Lunch Attack", "Launch", new { id = item.id })
 					}
+					else
+					{
+						<p>@item.fired_at</p>
+					}
 				</td>
 			</tr>
 		}
