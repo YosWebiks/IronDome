@@ -1,57 +1,57 @@
-﻿@model IronDome.ViewModel.ThreatView
+﻿@model IEnumerable<IronDome.Models.Threat>
 
 @{
-    ViewData["Title"] = "AttackArea";
+	ViewData["Title"] = "AttackArea";
 }
 
 <h1>Attack Area</h1>
 
 <p>
-    <a asp-action="createThreat">Create New Threat</a>
+	<a asp-action="createThreat">Create New Threat</a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @* @Html.DisplayNameFor(model => model.threats.id) *@
-                ID
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.responseTime) *@
-                Response Time
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.status) *@
-                Status
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.fired_at) *@
-                Fierd At
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.threats) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.responseTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fired_at)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
+	<thead>
+		<tr>
+			<th>
+				@* @Html.DisplayNameFor(model => model.threats.id) *@
+				ID
+			</th>
+			<th>
+				Organization
+			</th>
+			<th>
+				Type
+			</th>
+			<th>
+				@* @Html.DisplayNameFor(model => model.status) *@
+				Status
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.id)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Org.name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.type.name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.status)
+				</td>
+				<td>
+					@if (item.status == IronDome.Utils.ThreatStatus.Inactive)
+					{	
+						@Html.ActionLink("Lunch Attack", "Launch", new { id = item.id })
+					}
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

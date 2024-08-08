@@ -1,12 +1,17 @@
 ﻿using IronDome.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace IronDome.ViewModel
 {
     public class ThreatView
     {
-        public IEnumerable<TerrorOrg> orgs { get; set; }
-        public IEnumerable<ThreatAmmunition> types { get; set; }
-        public IEnumerable<Threat> threats { get; set; }
+        public List<SelectListItem> TerrorOrgs { get; set; }
+        public List<SelectListItem> Types { get; set; }
+
+        public int TerrorOrgId { get; set; }
+        public int TypeId { get; set; }
+
+
 
     }
 }
