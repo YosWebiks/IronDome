@@ -90,8 +90,15 @@ namespace IronDome.Controllers
 					await Task.Delay(2000);
 					timer -= 2;
 				}
-				cts.Cancel();
-				t.status = Utils.ThreatStatus.Succeeded;
+				if (cts.IsCancellationRequested)
+				{
+					t.status = Utils.ThreatStatus.Failed;
+				}
+				else
+				{
+					t.status = Utils.ThreatStatus.Succeeded;
+					cts.Cancel();
+				}
 				ThreatMap.Remove(t.id.ToString());
 				Data.Get.SaveChanges();
 			}, cts.Token);
@@ -109,6 +116,32 @@ namespace IronDome.Controllers
 				.Include(t => t.Org)
 				.ToList()
 				.Where(t => t.status != Utils.ThreatStatus.Inactive));
+		}
+
+		public IActionResult Intercept(int tid, int did)
+		{
+			// find threat
+			Threat? t = Data.Get.Threats.Find(tid);
+			// find deffence
+			DefenceAmmunition? da = Data.Get.DefenceAmmunitions.Find(did);
+			// make sure not null
+			if (t == null || da == null)
+			{
+				return NotFound();
+			}
+			if (da.amount < 1)
+			{
+				return BadRequest($"{da.name} is out of ammunition! Please refill");
+			}
+			// cancel task and delete for dictionary
+			ThreatMap[tid.ToString()].Cancel();
+
+			// decrease the {da} amount and update the status of the threat
+			--da.amount;
+
+			Data.Get.SaveChanges();
+			Thread.Sleep(500);
+			return RedirectToAction(nameof(DeffenceArea));
 		}
 	}
 }

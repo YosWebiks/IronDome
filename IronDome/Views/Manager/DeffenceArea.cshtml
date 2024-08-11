@@ -49,10 +49,19 @@
 				<td>
 					@Html.DisplayFor(modelItem => item.fired_at)
 				</td>
-				<td>
-					@Html.ActionLink("Iron Dome", "Intercept", new { tid = item.id, did = 1 }) |
-					@Html.ActionLink("Patriot", "Intercept", new { tid = item.id, did = 2 })
-				</td>
+				@if (item.status == IronDome.Utils.ThreatStatus.Active)
+				{
+					<td>
+						@Html.ActionLink("Iron Dome", "Intercept", new { tid = item.id, did = 1 }) |
+						@Html.ActionLink("Patriot", "Intercept", new { tid = item.id, did = 2 })
+					</td>
+				}
+				else
+				{
+					<td>
+						<span>No available action at the moment</span>
+					</td>
+				}
 			</tr>
 		}
 	</tbody>
