@@ -24,7 +24,7 @@ namespace IronDome.Models
 		{
 			get
 			{
-				return (Org.distance / type.speed) * 3600;
+				return (int)(((double)Org.distance / (double)type.speed) * 3600);
 			}
 		}
 
