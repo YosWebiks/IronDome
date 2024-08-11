@@ -9,6 +9,7 @@ namespace IronDome.Controllers
 {
 	public class ManagerController : Controller
 	{
+		public static Dictionary<string, CancellationTokenSource> ThreatMap = new();
 		public IActionResult Index()
 		{
 			List<DefenceAmmunition> defences = Data.Get.DefenceAmmunitions.ToList();
@@ -76,7 +77,38 @@ namespace IronDome.Controllers
 			t.fired_at = DateTime.Now;
 			Data.Get.SaveChanges();
 
+			// create cancelation token
+			CancellationTokenSource cts = new();
+			// create & run task
+			Task task = Task.Run(async () =>
+			{
+				// print status every 2 seconds
+				int timer = t.responseTime;
+				while (!cts.IsCancellationRequested && timer > 0)
+				{
+					Console.WriteLine($"{t.id} threat is {timer} seconds away");
+					await Task.Delay(2000);
+					timer -= 2;
+				}
+				cts.Cancel();
+				t.status = Utils.ThreatStatus.Succeeded;
+				ThreatMap.Remove(t.id.ToString());
+				Data.Get.SaveChanges();
+			}, cts.Token);
+
+			// save the threat in the dictionary
+			ThreatMap[t.id.ToString()] = cts;
+
 			return RedirectToAction(nameof(AttackArea));
+		}
+
+		public IActionResult DeffenceArea()
+		{
+			return View(Data.Get.Threats
+				.Include(t => t.type)
+				.Include(t => t.Org)
+				.ToList()
+				.Where(t => t.status != Utils.ThreatStatus.Inactive));
 		}
 	}
 }
