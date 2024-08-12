@@ -48,12 +48,17 @@
 				<td>
 					@if (item.status == IronDome.Utils.ThreatStatus.Inactive)
 					{	
-						@Html.ActionLink("Lunch Attack", "Launch", new { id = item.id })
+						@* <span> *@
+						 @Html.ActionLink("Lunch Attack", "Launch", new { id = item.id })
+						 @* <button onclick="invokeLaunch(@item.id, @item.responseTime, " @($"{item.Org.name} {item.type.name}") ")></button> *@
 					}
 					else
 					{
 						<p>@item.fired_at</p>
 					}
+				</td>
+				<td>
+					<button onclick="invokeLaunch(@item.id, @item.responseTime, ' @($"{item.Org.name} {item.type.name}") ')">rt launch</button>
 				</td>
 			</tr>
 		}
