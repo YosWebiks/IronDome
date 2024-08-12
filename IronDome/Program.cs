@@ -21,6 +21,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
 app.MapHub<RealTime>("/rt");
 
 app.MapControllerRoute(
