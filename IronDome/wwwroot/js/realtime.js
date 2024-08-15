@@ -21,11 +21,11 @@ function invokeLaunch(id, rt, name) {
 connection.on("RedAlert", function (id, rt, name) {
     const h1 = document.createElement("h1")
     h1.style.color = "red"
-    //if (window.location.href.includes("Attack")) {
-    h1.textContent = "Gift has been sent to our Zionist friend in Israel, it'll arraive in " + rt + " seconds"
-    //} else {
-    //    h1.textContent = name + " has sent you a present! it'll arraive in " + rt + " seconds"
-    //};
+    if (window.location.href.includes("Attack")) {
+        h1.textContent = "Gift has been sent to our Zionist friend in Israel, it'll arraive in " + rt + " seconds"
+    } else {
+        h1.textContent = name + " has sent you a present! it'll arraive in " + rt + " seconds"
+    };
     document.body.appendChild(h1)
     setTimeout(() => {
         document.body.removeChild(h1)
