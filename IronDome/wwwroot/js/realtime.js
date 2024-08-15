@@ -30,7 +30,18 @@ connection.on("RedAlert", function (id, rt, name) {
     setTimeout(() => {
         document.body.removeChild(h1)
     }, 2500)
-
+    const tr = document.createElement("tr")
+    const td1 = document.createElement("td")
+    const td2 = document.createElement("td")
+    const td3 = document.createElement("td")
+    td1.innerHTML = id
+    td2.innerHTML = rt
+    td3.innerHTML = name
+    tr.appendChild(td1)
+    tr.appendChild(td2)
+    tr.appendChild(td3)
+    document.querySelector("#def-bod-tbl").appendChild(tr)
+    console.log(document.querySelector("#def-bod-tbl"))
 })
 
 // listen to intercept
